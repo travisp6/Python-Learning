@@ -14,3 +14,6 @@ git add . #adds all
 
 ######## CMD COMMANDS #########
 mkdir foldername
+
+
+aaaaaaaaaaa
