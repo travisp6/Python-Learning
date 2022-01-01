@@ -1,0 +1,16 @@
+######### GIT COMMANDS ########
+git #lists all commands
+
+git clone "url"
+git status
+git add file.py
+git commit -m "message what changed"
+    failed to add message type: esc:wq
+git push
+git pull
+git add -A #adds all
+git add . #adds all
+
+
+######## CMD COMMANDS #########
+mkdir foldername
