@@ -85,3 +85,13 @@ def blackjack(a,b,c):
 print(blackjack(5,6,7))
 print(blackjack(9,9,9))
 print(blackjack(9,9,11))
+
+#return true if 007 is present in list
+def spygame(a):
+    x = [0,0,7,'n']
+    for i in a:
+        if i == x[0]:
+            x.pop(0)           
+    return len(x) == 1
+
+print(spygame([1,2,3,4,0,8,0,9,7,2]))
