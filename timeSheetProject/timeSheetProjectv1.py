@@ -41,31 +41,53 @@ while question_in not in ('y','n'):
         punch_in = datetime.now()
         print(punch_in)
     elif question_in =='n':
-        print('have a nice day')
+        print('Have a nice day.')
         exit()
 
 #going on lunch or punching out?
 question_lunch_out=None
-question_lunch_out=input("Are you taking a lunch? 'y'? ")
-if question_lunch_out=='y':
-    lunch_punch_out=datetime.now()
-    print(lunch_punch_out)
-    question_lunch_in=input("Are you back from lunch? 'y'? ")
-    if question_lunch_in=='y':
-        lunch_punch_in=datetime.now()
-        print(lunch_punch_in)
-elif question_lunch_out=='n':
-    pass
+y = 1
+while question_lunch_out not in ('y','n'):
+    question_lunch_out=input("Are you taking a lunch? 'y' or 'n' ")
+    if question_lunch_out=='y':
+        lunch_punch_out=datetime.now()
+        print(lunch_punch_out)
+        question_lunch_in=None
+        while y == True:
+            while question_lunch_in not in ('y','n'):
+                question_lunch_in=input("Are you back from lunch? 'y' or 'n' ")
+                if question_lunch_in=='n':
+                    y = True
+                    question_lunch_in = None
+                elif question_lunch_in=='y':
+                    lunch_punch_in=datetime.now()
+                    print(lunch_punch_in)
+                    y = False
+    elif question_lunch_out=='n':
+        pass
 
 #punch out time
 question_out=None
-while question_out not in ('y','n'):
-    question_out=input("Do you want to punch out? 'y' or 'n' ")
-    if question_out=='y':
-        punch_out = datetime.now()
-        print(punch_out)
-    elif question_out=='n':
-        pass
+x = 1
+while x == True:
+    while question_out not in ('y','n'):
+        question_out=input("Do you want to punch out? 'y' or 'n' ")
+        if question_out=='y':
+            punch_out = datetime.now()
+            print(punch_out)
+            print('lunch in')
+            x = False
+        elif question_out=='n':
+            question_confirm_out=None
+            while question_confirm_out not in ('y','n'):
+                question_confirm_out=input("Ending your day without punching out would cancel all punches. Confirm 'y' or 'n' ")
+                if question_confirm_out=='y':
+                    print('Have a nice day.')
+                    exit()
+                elif question_confirm_out=='n':
+                    question_out=None
+                    x = True
+
 
 #display time between punches if lunch taken
 #send to google sheets
