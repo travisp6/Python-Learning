@@ -14,3 +14,17 @@ git add . #adds all
 
 ######## CMD COMMANDS #########
 mkdir foldername
+
+######## TERRAFORM COMMANDS ########
+terraform #gives list of commands
+terraform init #download neccesary plugins to interact with aws (or whatever provider you use)
+terraform plan #dry run of your code, if going to delete/overwrite/make sure you dont break stuff
+    +create, -delete ~modify
+terraform apply
+    Approve: yes/no or add --auto-approve
+terraform destroy #destroys everything (better to #out or del code)
+    Approve: yes/no or add --auto-approve
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+terraform state show "copy paste something like terraform state list stuff"
+
