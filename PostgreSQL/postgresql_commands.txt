@@ -1,0 +1,80 @@
+https://www.youtube.com/watch?v=qw--VYLpxG4
+
+\?
+CREATE DATABASE test;
+DROP DATABASE test;
+
+#lists databases
+	\l
+#clear screen
+	\! cls
+
+psql -U <username> -h <hostname>
+psql -U postgres -h localhost
+
+#connect to database
+	\c test
+
+CREATE TABLE table_name (
+	Column name + data type + constraints if any
+)
+
+https://www.postgresql.org/docs/11/datatype.html
+CREATE TABLE person (
+	id INT,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	gender VARCHAR(6),
+	date_of_birth DATE,
+)
+
+#DROP TABLE <tablename>
+
+#BIGSERIAL auto-generates next id value
+#create a table with constrains
+CREATE TABLE person (
+	id BIGSERIAL NOT NULL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	gender VARCHAR(6) NOT NULL,
+	date_of_birth DATE NOT NULL)
+
+#list tables
+	\d
+	\dt
+	\d <tablename>
+
+#inserting into table
+INSERT INTO person (
+	first_name,
+	last_name,
+	gender,
+	date_of_birth)
+VALUES ('john', 'doe', 'male', DATE '1920-02-02');
+
+#show table *means everything- could be first_name<comma> last_name ect
+SELECT * FROM <TABLENAME>;
+
+#add table from an SQL file
+\i '/Users/pc owner/Desktop/Python-Learning/PostgreSQL/person.sql'
+
+#ascend or descend
+1 2 3 4 ASC
+4 3 2 1 DESC
+
+SELECT * FROM person ORDER BY country_of_birth;
+SELECT * FROM person ORDER BY country_of_birth ASC;
+SELECT * FROM person ORDER BY country_of_birth DESC;
+
+
+
+
+
+
+
+
+
+
+
+
+
