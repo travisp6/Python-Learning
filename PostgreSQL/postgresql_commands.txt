@@ -1,3 +1,4 @@
+#MY NOTES ON
 https://www.youtube.com/watch?v=qw--VYLpxG4
 
 \?
@@ -66,10 +67,176 @@ SELECT * FROM person ORDER BY country_of_birth;
 SELECT * FROM person ORDER BY country_of_birth ASC;
 SELECT * FROM person ORDER BY country_of_birth DESC;
 
+SELECT first_name FROM person ORDER BY first_name ASC;
+
+#DISTINCT lists only once
+SELECT DISTINCT country_of_birth FROM person ORDER BY country_of_birth;
+
+SELECT * FROM person WHERE gender = 'Female';
+SELECT * FROM person WHERE gender = 'Male' AND (country_of_birth = 'Poland' OR country_of_birth = 'China');
+
+#true
+SELECT 1 = 1;
+#false <> not equal to
+SELECT 1 <> 2;
+
+SELECT * FROM person WHERE id <> 2;
+SELECT * FROM person WHERE gender = 'Male' LIMIT 10;
+
+SELECT * FROM person OFFSET 5 LIMIT 10;
+
+#LIMIT was introduced instead of FETCH
+SELECT * FROM person OFFSET 5 FETCH FIRST 5 ROW ONLY;
+
+#use IN to include several country_of_birth on one line
+SELECT * FROM person WHERE country_of_birth IN ('China', 'Brazil', 'Mexico') ORDER BY country_of_birth;
+
+#select the range start to end
+SELECT * FROM person WHERE date_of_birth BETWEEN DATE '1987-06-01' AND '1987-06-30';
+
+#find all emails using wildcard %
+SELECT * FROM person WHERE email LIKE '%google.%';
+
+#find all emails with at least _____ digits followed by text and then wildcard %
+SELECT * FROM person WHERE email LIKE '_________3@%';
+
+SELECT * FROM person WHERE country_of_birth LIKE 'P%' ORDER BY country_of_birth;
+											ILIKE 'p%'
+#COUNT() and GROUP BY
+SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth ORDER BY country_of_birth;
+
+#HAVING after GROUP BY before ORDER BY
+SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*)>100 ORDER BY country_of_birth;
+
+SELECT MAX(price) FROM car;
+
+SELECT MIN(price) FROM car;
+
+SELECT AVG(price) FROM car;
+
+SELECT ROUND(AVG(price)) FROM car;
+
+SELECT make, model, MIN(price) FROM car GROUP BY make, model;
+
+SELECT make, MIN(price) FROM car GROUP BY make;
+
+SELECT SUM(price) FROM car;
+
+SELECT make, SUM(price) FROM car GROUP BY make;
+
+#10% of price and price-10% price
+SELECT id, make, model, price, ROUND(price * .10,2), ROUND(price - (price * .10),2) FROM car;
+
+#make column name
+SELECT id, make, model, price AS original_price, ROUND(price * .10,2) AS ten_percent, ROUND(price - (price * .10),2) AS discount FROM car;
+
+#when value is NULL change to whatever you want
+SELECT COALESCE(email, 'Email not provided') FROM person;
+
+#DATE AND TIME
+https://www.postgresql.org/docs/13/functions-datetime.html
+SELECT NOW();
+SELECT NOW()::DATE;
+SELECT NOW()::TIME;
+
+#subtract 1 year (or add year/months/days)
+SELECT NOW() - INTERVAL '10 YEAR';
+
+#wrap it for just the ::DATE
+SELECT (NOW() - INTERVAL '10 YEAR')::DATE;
+
+#select just the year/month/day/century
+SELECT EXTRACT(YEAR FROM NOW());
+
+#calculate age from person
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth, AGE(NOW(), date_of_birth) AS age FROM person;
+
+SELECT * FROM person LIMIT 1;
+
+ALTER TABLE person DROP CONSTRAINT person_pkey;
+
+ALTER TABLE person ADD PRIMARY KEY (id);
+
+DELETE FROM person WHERE id = 1;
+
+SELECT email, count(*) FROM person GROUP BY email HAVING COUNT(*) > 1;
+SELECT * FROM person WHERE email = 'thesame';
+
+#name the constraint
+ALTER TABLE person ADD CONSTRAINT unique_email_address UNIQUE (email);
+ALTER TABLE person DROP CONSTRAINT unique_email_address;
+
+#let postgresql name the constraint
+ALTER TABLE person ADD UNIQUE (email);
+
+ALTER TABLE person ADD CONSTRAINT gender_constraint CHECK (gender = 'Female' OR gender = 'Male');
+
+SELECT gender FROM person GROUP BY gender;
+
+DELETE * FROM person WHERE id = 2;
+DELETE * FROM person WHERE gender = 'Female' AND country_of_birth = 'Nigeria';
+
+UPDATE person SET email = 'ommar@gmail.com' WHERE id = 5;
+
+UPDATE person SET first_name = 'omar', last_name = 'Monk', email = 'omar@gmail.com' WHERE id = 5;
+
+#wont work due to id key 5 already existing
+INSERT INTO person (id, first_name, last_name, gender, email, date_of_birth, country_of_birth)
+VALUES (5, 'bill', 'blah', 'Male', 'ommar@gmail.com', DATE '1950-09-05', 'Norway');
+
+INSERT INTO person (id, first_name, last_name, gender, email, date_of_birth, country_of_birth)
+VALUES (5, 'bill', 'blah', 'Male', 'ommar@gmail.com', DATE '1950-09-05', 'Norway')
+ON CONFLICT (id) DO NOTHING;
+
+ON CONFLICT (id) DO UPDATE SET email = EXLUDED.email
+
+#working with 2 tables. in create table
+    car_id BIGINT REFERENCES car (id),
+    UNIQUE(car_id)
+#set value id of car to a person
+UPDATE person SET car_id = 2 WHERE id =1
+
+#INNER JOIN
+SELECT * FROM person JOIN car ON person.car_id = car.id;
+
+#select only what you want to see
+SELECT person.first_name, car.make, car.model, car.price
+FROM person
+JOIN car ON person.car_id = car.id;
+
+#LEFT JOIN
+SELECT * FROM person
+LEFT JOIN car ON car.id = person.car_id;
+WHERE car.* IS NULL;
+
+#select only someone without a car
+SELECT * FROM person WHERE car_id IS NULL;
+or
+SELECT * FROM person
+LEFT JOIN car ON car.id = person.car_id
+WHERE car.* IS NULL;
+
+UPDATE person SET car_id = 10 WHERE id = 4;
+
+#to delete a car id you must first remove the attached id from person or delete person or delete car id to NULL then delete car
+
+#create a CSV file from person/car
+\copy (SELECT * FROM person LEFT JOIN car ON car.id = person.car_id) TO '/Users/pc owner/Desktop/Python-Learning/PostgreSQL/results.csv' DELIMITER ',' CSV HEADER;
+
+SELECT * FROM person_id_seq;
+SELECT nextval('person_id_seq'::regclass);
+
+#list of all extensions
+SELECT * FROM pg_available_extensions;
+#install extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+#list functions
+\df
+#version 4 is random
+SELECT uuid_generate_v4();
 
 
-
-
+40847
 
 
 
