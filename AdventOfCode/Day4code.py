@@ -5,6 +5,8 @@
 #output: winning card's score (sum of unmarked numbers on card * the number last called)
 
 
+DOES NOT WORK 1/23/22
+
 with open('dataforAdventCode.txt', "r") as file:
     input = [x for x in file.read().split()]
 #create the list of numbers that will be called
@@ -16,50 +18,36 @@ zero_twentyfive = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 
 #create the boards
 appended_board = []
-def bingo_boards(numbers):
-    #separate the boards to size 5x5
-    count = 0
-    by25 = 0
-    while count < 3:
-        if count < 3:
-            #dictionary the boards to have placement for victory determination
-            board = dict(zip(zero_twentyfive,input[by25:by25+25]))
-            appended_board.append(board)
-            count += 1
-            by25 += 25
-        print(board)
+
+#separate the boards to size 5x5
+count = 0
+by25 = 0
+while count < 3:
+    if count < 3:
+        #list the boards to have placement for victory determination
+        board = dict(zip(zero_twentyfive,input[by25:by25+25]))
+        appended_board.append(board)
+        count += 1
+        by25 += 25
 
 game_won = False
 #check if a board has won
-def winner(victory):
+def winner():
     #check if 0-4, 5-9, 10-14, 15-19, 20-24 wins
     #check if 0,5,10,15,20 or 1,6,11,16,21 or 2,7,12,17,22 or 3,8,13,18,23 or 4,9,14,19,24 wins
-    if appended_board[0] == 'x' and appended_board[1] == 'x' and appended_board[2] == 'x' and appended_board[3] == 'x' and appended_board[4] == 'x' or \
-    appended_board[5] == 'x' and appended_board[6] == 'x' and appended_board[7] == 'x' and appended_board[8] == 'x' and appended_board[9] == 'x' or \
-    appended_board[10] == 'x' and appended_board[11] == 'x' and appended_board[12] == 'x' and appended_board[13] == 'x' and appended_board[14] == 'x' or \
-    appended_board[15] == 'x' and appended_board[16] == 'x' and appended_board[17] == 'x' and appended_board[18] == 'x' and appended_board[19] == 'x' or \
-    appended_board[20] == 'x' and appended_board[21] == 'x' and appended_board[22] == 'x' and appended_board[23] == 'x' and appended_board[24] == 'x' or \
-    appended_board[0] == 'x' and appended_board[5] == 'x' and appended_board[10] == 'x' and appended_board[15] == 'x' and appended_board[20] == 'x' or \
-    appended_board[1] == 'x' and appended_board[6] == 'x' and appended_board[11] == 'x' and appended_board[16] == 'x' and appended_board[21] == 'x' or \
-    appended_board[2] == 'x' and appended_board[7] == 'x' and appended_board[12] == 'x' and appended_board[17] == 'x' and appended_board[22] == 'x' or \
-    appended_board[3] == 'x' and appended_board[8] == 'x' and appended_board[13] == 'x' and appended_board[18] == 'x' and appended_board[23] == 'x' or \
-    appended_board[4] == 'x' and appended_board[9] == 'x' and appended_board[14] == 'x' and appended_board[19] == 'x' and appended_board[24] == 'x':
+    if 
         game_won = True
 
-        
-#play the game
-def playing(runit):
-    #call first number[i] in list
-    
-    #if a board has won sum the remaining numbers in dictionary and multiply by last number
 
-    pass
+#start drawing cards
+while game_won == False:
+    for i in range(0, len(appended_board)):
+        #draw the first number from draw_number list
+        for j in len(i):
+            if i[j] == draw_number[0]:
+                #go through each board and if the number drawn is in the board change that board number to 'x'
+                j[i] = 'x'
+                draw_number.pop()
+            #if a board has won sum the remaining numbers and multiply by last number
+            winner()
 
-print(bingo_boards(input))
-#board = dict(zip(zero_twentyfive,input[:25]))
-#board2 = dict(zip(zero_twentyfive,input[25:50]))
-#print(board)
-#print(board2)
-#full_boards = [board,board2]
-#print(full_boards)
-#print(bingo_board(input))
