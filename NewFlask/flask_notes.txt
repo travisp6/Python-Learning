@@ -1,0 +1,85 @@
+NOTES ON:
+https://www.youtube.com/watch?v=Qr4QMBUPxWo
+TIME: 2:43:12
+
+#push docker image using github actions
+https://www.youtube.com/watch?v=77nUeNZ2954
+
+from flask import Flask, render_template
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+Your Main Folder
+create folder
+    templates
+        index.html
+        !
+        base.html
+    static
+        css
+            main.css
+app.py
+
+set FLASK_APP=app.py
+flask return
+
+#for testing use debug mode
+#py .\app.py
+set FLASK_DEBUG=1
+    or
+if __name__ == "__main__":
+    app.run(debug=True)
+
+#template inheritance
+always displayed to users taken from base.html
+
+#dynamic variables
+@app.route('/about/<username>')
+
+'''
+{% extends 'base.html' %}
+
+{% block head %}
+<h1>Template Head</h1>
+{% endblock %}
+
+{% block body %}
+<h1>Template Goes Here</h1>
+{% endblock %}
+'''
+
+#bootstrap html
+https://getbootstrap.com/docs/5.1/getting-started/introduction/#starter-template
+
+#import a db
+from app import db
+db.create_all()
+from app import Variable
+item1 = Variable(name='bleh', price=10)
+db.session.add(item1)
+db.session.commit()
+
+Variable.query.all()
+
+for item in Variable.query.filter_by(price=50):
+    item.name
+
+
+#can clear the screen from inside cmd python
+os.system('cls')
+
+#example class db
+class Item(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(length=30), nullable=False, unique=True)
+    price = db.Column(db.Integer(), nullable=False)
+
+    def __repr__(self):
+        return f'Item {self.name}'
+
+#example sqlite
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///INSERTDBNAME.db'
+db = SQLAlchemy(app)
