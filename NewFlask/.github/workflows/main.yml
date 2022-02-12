@@ -23,3 +23,4 @@ jobs:
       run: |
         docker image build -t travisp6/gitaction:v1 .
         docker push travisp6/gitaction:v1
+        
