@@ -1,0 +1,11 @@
+docker image build -t appname .
+docker image ls
+docker-machine active
+docker ps
+docker images
+docker run -p 5000:5000 -d dockappname
+docker stop copypasteID
+docker system prune
+
+docker rmi $(docker images -a -q)
+
